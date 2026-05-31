@@ -1,0 +1,208 @@
+:root {
+  --primary: #2563eb;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --border:RED;
+  --text: #1e293b;
+}
+
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+header {
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+}
+header img{
+  border-radius: 60px;
+  height: 101px;
+  width:200px;
+}
+/* BILKUL SADA BUILD AREA - KOI OUTLINE NAHI */
+#editorCanvas {
+  flex: 1;
+  overflow: auto;
+  padding: 40px;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(37,99,235,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(99,102,241,0.03) 0%, transparent 50%),
+    #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  align-items: flex-start;
+}
+.builder-element,.inline-element {
+  position: relative;
+  cursor: pointer;
+  height: auto;
+  display: inline-block;
+  width: auto;
+  border: 1px dashed transparent; /* Dashed but transparent */
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--card);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 120px;
+}
+
+
+/* Hover pe sirf light glow - outline nahi */
+.builder-element:hover,.inline-element:hover {
+  border-color: rgba(37,99,235,0.2);
+  box-shadow: 0 0 0 1px rgba(37,99,235,0.1), 0 4px 20px rgba(37,99,235,0.08);
+  transform: translateY(-2px);
+}
+
+/* Selected pe bhi outline nahi - sirf subtle shadow */
+.selected {
+  border-color: var(--primary)!important;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.15), 0 8px 30px rgba(37,99,235,0.12)!important;
+  outline: none!important;
+}
+
+.delete-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: none;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+}
+
+.selected.delete-btn {
+  display: block;
+  animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}/* Export Modal CSS - Fixed */
+#exportModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#exportModal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #1a1a2e;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.code-box{ 
+  background:red;
+  color:white;
+  padding:15px;
+  border-radius:12px;
+  font-family:monospace;
+  font-size:13px;
+  max-height:200px;
+  overflow:auto;
+  font-weight: 700;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+;
+}
+/* Button ko hamesha sahi dikhane ke liye */
+.inline-element[data-type="button"] {
+  padding: 0!important;
+  border: none!important;
+  background: transparent!important;
+  outline: none!important;
+}
+
+.inline-element[data-type="button"] .btn-link {
+  background: red;
+  color: #ffffff;
+  padding: 14px 32px;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.inline-element[data-type="button"] .btn-link:hover {
+  background: red;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px red;
+}
+
+/* Selected hone pe bhi button ka design na toote */
+.inline-element[data-type="button"].selected {
+  outline: none!important;
+  box-shadow: 0 0 0 2px red !important;
+  border-radius: 50px;
+}
+
+/* Delete button ke upar na aaye */
+.inline-element[data-type="button"] .delete-btn {
+  top: -12px;
+  right: -12px;
+}/* Button ka pura area clickable */
+.inline-element[data-type="button"] {
+  padding: 0!important;
+  border: 2px dashed transparent;
+  background: transparent!important;
+  outline: none!important;
+  cursor: pointer;
+  display: inline-block;
+  min-width: 120px;
+  min-height: 50px;
+}
+
+/* Hover pe pura area highlight ho */
+.inline-element[data-type="button"]:hover {
+  border-color:red;
+  border-radius: 50px;
+}
+
+/* Selected pe pura area blue glow */
+.inline-element[data-type="button"].selected {
+  border-color: var(--primary)!important;
+  box-shadow: 0 0 0 3px red!important;
+  border-radius: 50px;
+  outline: none!important;
+}
+
+/* Button ke andar text center rahe */
+.btn-link {
+  pointer-events: none; /* Text click na ho, wrapper click ho */
+  user-select: none;
+}
